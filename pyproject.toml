@@ -2,6 +2,8 @@
 requires = [
     "setuptools>=42",
     "pybind11>=2.10.0",
+    "ninja",
+    "cmake>=3.12"
 ]
 build-backend = "setuptools.build_meta"
 
