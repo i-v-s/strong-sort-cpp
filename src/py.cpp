@@ -33,6 +33,16 @@ PYBIND11_MODULE(strong_sort_cpp, m) {
         .def("update", &StrongSort::update, "Update tracker state with new detections",
              py::arg("ltwhs"), py::arg("confidences"), py::arg("classes"), py::arg("features"), py::arg("image_size"));
 
+    py::class_<TrackedBox>(m, "TrackedBox")
+        .def_readwrite("x1", &TrackedBox::x1)
+        .def_readwrite("y1", &TrackedBox::y1)
+        .def_readwrite("x2", &TrackedBox::x2)
+        .def_readwrite("y2", &TrackedBox::y2)
+        .def_readwrite("track_id", &TrackedBox::trackId)
+        .def_readwrite("class_id", &TrackedBox::classId)
+        .def_readwrite("confidence", &TrackedBox::confidence)
+        .def_property_readonly("xyxy", [] (const TrackedBox &b) { return Eigen::Vector4f(b.x1, b.y1, b.x2, b.y2); });
+
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else
