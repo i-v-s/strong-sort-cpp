@@ -256,7 +256,7 @@ struct Track
         Confirmed = 2,
         Deleted = 3
     };
-    uint trackId, classId;
+    uint trackId, classId, lastDetectionIdx;
     int hits = 1, age = 1;
     int timeSinceUpdate = 0;
     float emaAlpha;
@@ -299,7 +299,7 @@ struct Track
 
         Vector4<real> r = tlwh();
         r.block<2, 1>(2, 0) += r.block<2, 1>(0, 0);
-        return TrackedBox{r[0] / width, r[1] / height, r[2] / width, r[3] / height, trackId, classId, conf};
+        return TrackedBox{r[0] / width, r[1] / height, r[2] / width, r[3] / height, trackId, classId, lastDetectionIdx, conf};
     }
     TrackedBox result(const cv::Size &imageSize) const noexcept
     {
@@ -323,7 +323,7 @@ struct Track
         return ret;
     }
 
-    void update(const Detection &detection, int classId, float conf)
+    void update(const Detection &detection, int classId, float conf, uint detectionIdx)
     {
         /*Perform Kalman filter measurement update step and update the feature
         cache.
@@ -334,6 +334,7 @@ struct Track
         */
         this->conf = conf;
         this->classId = classId;
+        this->lastDetectionIdx = detectionIdx;
         tie(mean, covariance) = kf.update(mean, covariance, detection.xyah(), detection.confidence);
 
         Feature detectionFeature = detection.feature / detection.feature.norm();
@@ -711,7 +712,7 @@ public:
 
         // Update track set.
         for (auto [trackIdx, detectionIdx]: matches)
-            tracks[trackIdx].update(detections[detectionIdx], classes[detectionIdx], confidences[detectionIdx]);
+            tracks[trackIdx].update(detections[detectionIdx], classes[detectionIdx], confidences[detectionIdx], detectionIdx);
 
         for (auto trackIdx: unmatchedTracks)
             tracks[trackIdx].markMissed();
