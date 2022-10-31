@@ -19,6 +19,7 @@ struct TrackedBox: public RelativeBox
 {
     uint trackId, classId, detectionId;
     float confidence;
+    int timeSinceUpdate;
 };
 
 struct DetectedBox: public RelativeBox

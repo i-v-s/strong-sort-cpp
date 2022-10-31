@@ -42,6 +42,7 @@ PYBIND11_MODULE(strong_sort_cpp, m) {
         .def_readwrite("class_id", &TrackedBox::classId)
         .def_readwrite("detection_id", &TrackedBox::detectionId)
         .def_readwrite("confidence", &TrackedBox::confidence)
+        .def_readwrite("time_since_update", &TrackedBox::timeSinceUpdate)
         .def_property_readonly("xyxy", [] (const TrackedBox &b) { return Eigen::Vector4f(b.x1, b.y1, b.x2, b.y2); });
 
 #ifdef VERSION_INFO

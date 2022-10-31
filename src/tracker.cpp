@@ -232,6 +232,7 @@ private:
 struct Detection
 {
     Vector4<real> tlwh;
+    size_t index;
     float confidence;
     Feature feature;
 
@@ -296,10 +297,9 @@ struct Track
 
     TrackedBox result(int width, int height) const noexcept
     {
-
         Vector4<real> r = tlwh();
         r.block<2, 1>(2, 0) += r.block<2, 1>(0, 0);
-        return TrackedBox{r[0] / width, r[1] / height, r[2] / width, r[3] / height, trackId, classId, lastDetectionIdx, conf};
+        return TrackedBox{r[0] / width, r[1] / height, r[2] / width, r[3] / height, trackId, classId, lastDetectionIdx, conf, timeSinceUpdate};
     }
     TrackedBox result(const cv::Size &imageSize) const noexcept
     {
@@ -323,7 +323,7 @@ struct Track
         return ret;
     }
 
-    void update(const Detection &detection, int classId, float conf, uint detectionIdx)
+    void update(const Detection &detection, int classId, float conf)
     {
         /*Perform Kalman filter measurement update step and update the feature
         cache.
@@ -334,7 +334,7 @@ struct Track
         */
         this->conf = conf;
         this->classId = classId;
-        this->lastDetectionIdx = detectionIdx;
+        this->lastDetectionIdx = detection.index;
         tie(mean, covariance) = kf.update(mean, covariance, detection.xyah(), detection.confidence);
 
         Feature detectionFeature = detection.feature / detection.feature.norm();
@@ -712,7 +712,7 @@ public:
 
         // Update track set.
         for (auto [trackIdx, detectionIdx]: matches)
-            tracks[trackIdx].update(detections[detectionIdx], classes[detectionIdx], confidences[detectionIdx], detectionIdx);
+            tracks[trackIdx].update(detections[detectionIdx], classes[detectionIdx], confidences[detectionIdx]);
 
         for (auto trackIdx: unmatchedTracks)
             tracks[trackIdx].markMissed();
@@ -837,7 +837,7 @@ vector<TrackedBox> StrongSort::update(const Matrix<real, Dynamic, 4> &ltwhs,
     for (size_t i = 0; i < ltwhs.rows(); ++i)
     {
         auto ltwh = ltwhs.block<1, 4>(i, 0);
-        detections.emplace_back(ltwh, confidences[i], features.row(i));
+        detections.emplace_back(ltwh, i, confidences[i], features.row(i));
     }
 
     // update tracker
