@@ -12,7 +12,7 @@
 
 using json = nlohmann::json;
 
-namespace strong_sort {
+namespace strongsort {
 
 constexpr int FEATURE_SIZE = 512;
 using Feature = Eigen::Vector<float, FEATURE_SIZE>;

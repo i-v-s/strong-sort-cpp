@@ -17,7 +17,7 @@ using namespace std;
 using namespace Eigen;
 using namespace cv;
 
-namespace strong_sort {
+namespace strongsort {
 
 
 /*********************************************************** KalmanFilter ***********************************************************/

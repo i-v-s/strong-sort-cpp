@@ -4,7 +4,7 @@
 
 #include "tracker.h"
 
-using namespace strong_sort;
+using namespace strongsort;
 
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
@@ -12,7 +12,7 @@ using namespace strong_sort;
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(strong_sort_cpp, m) {
+PYBIND11_MODULE(strongsort_py, m) {
     m.doc() = R"pbdoc(
         Pybind11 example plugin
         -----------------------

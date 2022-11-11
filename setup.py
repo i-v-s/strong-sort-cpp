@@ -119,14 +119,14 @@ class CMakeBuild(build_ext):
 
 
 setup(
-    name="strong_sort_cpp",
+    name="strongsort_py",
     version="0.0.1",
     author="Igor Smirnov",
     author_email="smirnoviv@rambler.ru",
-    url="https://github.com/i-v-s/strong-sort-pp",
+    url="https://github.com/i-v-s/strong-sort-cpp",
     description="A test project using pybind11",
     long_description="",
-    ext_modules=[CMakeExtension("strong_sort_cpp")],
+    ext_modules=[CMakeExtension("strongsort_py")],
     extras_require={"test": "pytest"},
     # Currently, build_ext only provides an optional "highest supported C++
     # level" feature, but in the future it may provide more features.
