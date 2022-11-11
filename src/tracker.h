@@ -41,9 +41,9 @@ public:
                                    const Eigen::Matrix<real, Eigen::Dynamic, FEATURE_SIZE> &features,
                                    const std::array<int, 2> &imageSize);
 
-    /*std::vector<TrackedBox> update(const std::vector<DetectedBox> &boxes,
+    std::vector<TrackedBox> update(const std::vector<DetectedBox> &boxes,
                                    const Eigen::Matrix<real, Eigen::Dynamic, FEATURE_SIZE> &features,
-                                   const cv::Size &imageSize);*/
+                                   const std::array<int, 2> &imageSize);
     void incrementAges() noexcept;
 };
 

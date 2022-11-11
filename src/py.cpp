@@ -12,6 +12,13 @@ using namespace strongsort;
 
 namespace py = pybind11;
 
+typedef std::vector<TrackedBox> (StrongSort::*update_np)(
+        const Eigen::Matrix<real, Eigen::Dynamic, 4> &,
+        const Eigen::VectorX<real> &,
+        const Eigen::VectorXi &,
+        const Eigen::Matrix<real, Eigen::Dynamic, FEATURE_SIZE> &,
+        const std::array<int, 2> &);
+
 PYBIND11_MODULE(strongsort_py, m) {
     m.doc() = R"pbdoc(
         Pybind11 example plugin
@@ -30,7 +37,7 @@ PYBIND11_MODULE(strongsort_py, m) {
         .def(py::init<float, float, int, int, int>(),
              py::arg("max_dist") = 0.2, py::arg("max_iou_distance") = 0.7, py::arg("max_age") = 70, py::arg("n_init") = 3, py::arg("nn_budget") = 100)
         .def("increment_ages", &StrongSort::incrementAges, "Increment tracks ages, if no detections found")
-        .def("update", &StrongSort::update, "Update tracker state with new detections",
+        .def("update", static_cast<update_np>(&StrongSort::update), "Update tracker state with new detections",
              py::arg("ltwhs"), py::arg("confidences"), py::arg("classes"), py::arg("features"), py::arg("image_size"));
 
     py::class_<TrackedBox>(m, "TrackedBox")

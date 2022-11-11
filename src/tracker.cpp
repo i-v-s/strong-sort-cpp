@@ -852,13 +852,13 @@ vector<TrackedBox> StrongSort::update(const Matrix<real, Dynamic, 4> &ltwhs,
     return outputs;
 }
 
-/*vector<TrackedBox> StrongSort::update(const vector<DetectedBox> &boxes, const Matrix<real, Dynamic, FEATURE_SIZE> &features, const Size &imageSize)
+vector<TrackedBox> StrongSort::update(const vector<DetectedBox> &boxes, const Matrix<real, Dynamic, FEATURE_SIZE> &features, const array<int, 2> &imageSize)
 {
     size_t size = boxes.size();
     Matrix<real, Dynamic, 4> ltwhs(size, 4);
     VectorX<real> confidences(size);
     VectorX<int> classes(size);
-    const int w = imageSize.width, h = imageSize.height;
+    const auto [w, h] = imageSize;
     for (size_t i = 0; i < size; ++i)
     {
         const DetectedBox &box = boxes[i];
@@ -871,7 +871,7 @@ vector<TrackedBox> StrongSort::update(const Matrix<real, Dynamic, 4> &ltwhs,
         classes[i] = static_cast<int>(box.classId);
     }
     return update(ltwhs, confidences, classes, features, imageSize);
-}*/
+}
 
 void StrongSort::incrementAges() noexcept
 {
