@@ -25,7 +25,7 @@ Using example
 ```python
 from torch import hub
 from torchreid.utils import FeatureExtractor
-from strong_sort_cpp import StrongSort
+from strongsort_py import StrongSort
 
 ss = StrongSort()
 yolo = hub.load('ultralytics/yolov5', 'yolov5m')
