@@ -12,11 +12,11 @@ set(EIGEN_DIR "/usr/include/eigen3/" CACHE PATH "Path to Eigen library")
 
 find_package(OpenCV REQUIRED)
 
-
 # Strongsort library
 
 add_library(strongsort)
 
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 set_property(TARGET strongsort PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 target_include_directories(strongsort

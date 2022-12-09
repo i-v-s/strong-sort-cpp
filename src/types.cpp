@@ -6,10 +6,16 @@ using namespace std;
 #include "types.h"
 
 
-DetectedBox::DetectedBox(const float *src, float w, float h) noexcept:
+DetectedBox::DetectedBox(const float *src, float w, float h) noexcept :
     RelativeBox{src[1] / w, src[2] / h, src[3] / w, src[4] / h},
     batchId(src[0]), classId(static_cast<uint>(src[5])),
     confidence(src[6])
+{}
+
+DetectedBox::DetectedBox(uint classId, uint batchId, float confidence, const std::array<float, 4> &box, const std::array<uint, 2> &size) noexcept :
+    RelativeBox{box[0] / size[0], box[1] / size[1], box[2] / size[0], box[3] / size[1]},
+    batchId(batchId), classId(classId),
+    confidence(confidence)
 {}
 
 bool DetectedBox::operator ==(const DetectedBox &other) const noexcept
