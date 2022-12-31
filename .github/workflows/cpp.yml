@@ -23,8 +23,8 @@ jobs:
       run: sudo apt update && DEBIAN_FRONTEND=noninteractive sudo apt install -y --no-install-recommends cmake make g++-12 libopencv-dev
     - name: Configure
       run: mkdir build && cd build && cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-12 ..
-    - name: make
-      run: make
+    - name: Make
+      run: cd build && make
     - name: make check
       run: make check
     - name: make distcheck
