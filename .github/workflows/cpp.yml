@@ -20,7 +20,7 @@ jobs:
       with:
         submodules: 'true'
     - name: Install dependencies
-      run: sudo apt update && DEBIAN_FRONTEND=noninteractive sudo apt install -y --no-install-recommends cmake make g++-12 libopencv-dev
+      run: sudo apt update && DEBIAN_FRONTEND=noninteractive sudo apt install -y --no-install-recommends cmake make g++-12 libopencv-dev libeigen3-dev
     - name: Configure
       run: mkdir build && cd build && cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-12 ..
     - name: Make
