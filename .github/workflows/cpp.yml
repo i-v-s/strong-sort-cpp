@@ -35,4 +35,4 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: package
-        path: build/*.deb
+        path: build/strongsort-0.0.1-Linux.deb
