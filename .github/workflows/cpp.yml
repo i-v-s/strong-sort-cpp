@@ -8,12 +8,12 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-22.04
-    
+    permissions:
+      contents: read
+      packages: write
     # container:
     #  image: ubuntu:22.04
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -25,7 +25,7 @@ jobs:
       run: mkdir build && cd build && cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-12 ..
     - name: Make
       run: cd build && make
-    - name: make check
-      run: make check
+    - name: Make package
+      run: make package
     - name: make distcheck
       run: make distcheck
