@@ -15,10 +15,10 @@ jobs:
       image: ubuntu:22.04
 
     steps:
-    - name: Checkout with submodules
+    - name: Checkout
       uses: actions/checkout@v3
-      with:
-        submodules: recursive
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
     - name: Install dependencies
       run: apt update && DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends cmake make g++-12 libopencv-dev
     - name: Configure
