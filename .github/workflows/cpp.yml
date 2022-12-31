@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Init submodule
+      run: git submodule init && git submodule update
     - name: Install dependencies
       run: apt update && DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends cmake make g++-12 libopencv-dev
     - name: Configure
