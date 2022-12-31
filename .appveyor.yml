@@ -1,13 +1,26 @@
+name: CI
+# on:
 version: '{build}'
-image: Visual Studio 2019
-stack: python 3.7
-skip_branch_with_pr: true
-init:
-- cmd: set PATH=C:\Python37;C:\Python37\Scripts;%PATH%
-install:
-- ps: python -m pip install --disable-pip-version-check --upgrade --no-warn-script-location pip build virtualenv wheel
-build_script:
-- ps: |
-    python -m pip install .
-test_script:
-- ps: python tests\test.py
+jobs:
+  build:
+    rusn-on: ubuntu-latest
+    container:
+      image: ubuntu:22.04
+  steps:
+    - name: Install dependencies
+      run: apt install cmake g++-12 libopencv-core-dev
+    - name: Configure
+      run: mkdir build && cd build && cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-12 ..
+
+# image: Visual Studio 2019
+# stack: python 3.7
+# skip_branch_with_pr: true
+# init:
+# - cmd: set PATH=C:\Python37;C:\Python37\Scripts;%PATH%
+# install:
+# - ps: python -m pip install --disable-pip-version-check --upgrade --no-warn-script-location pip build virtualenv wheel
+# build_script:
+# - ps: |
+#    python -m pip install .
+# test_script:
+# - ps: python tests\test.py

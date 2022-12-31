@@ -25,12 +25,11 @@ target_include_directories(strongsort
         src/lsap
     INTERFACE
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/;${CMAKE_CURRENT_BINARY_DIR}/>"
-        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+        "$<INSTALL_INTERFACE:include/>"
     )
 
 target_sources(strongsort
-    PRIVATE src/tracker.cpp src/types.cpp src/lsap/rectangular_lsap.cpp
-    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/tracker.h> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/types.h>
+    PRIVATE src/tracker.cpp src/types.cpp src/lsap/rectangular_lsap.cpp src/tracker.h src/types.h
 )
 
 target_link_libraries(strongsort PRIVATE opencv_core)
@@ -63,3 +62,11 @@ add_subdirectory(pybind11)
 pybind11_add_module(strongsort_py src/py.cpp)
 target_include_directories(strongsort_py PRIVATE ${EIGEN_DIR})
 target_link_libraries(strongsort_py PRIVATE opencv_core strongsort)
+
+
+# Build .deb package
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Igor Smirnov")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libopencv-core-dev")
+include(CPack)
