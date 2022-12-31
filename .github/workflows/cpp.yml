@@ -26,6 +26,4 @@ jobs:
     - name: Make
       run: cd build && make
     - name: Make package
-      run: make package
-    - name: make distcheck
-      run: make distcheck
+      run: cd build && make package
