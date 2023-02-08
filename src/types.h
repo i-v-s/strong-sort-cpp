@@ -33,4 +33,10 @@ struct DetectedBox: public RelativeBox
     float confidence;
 };
 
+template<typename T>
+float clip(T value, T min_ = 0, T max_ = 1) noexcept
+{
+    return std::min(std::max(value, min_), max_);
+}
+
 #endif // TYPES_H

@@ -5,11 +5,6 @@ using namespace std;
 
 #include "types.h"
 
-float clip(float value, float min_ = 0.f, float max_ = 1.f) noexcept
-{
-    return min(max(value, min_), max_);
-}
-
 DetectedBox::DetectedBox(const float *src, float w, float h) noexcept :
     RelativeBox{clip(src[1] / w), clip(src[2] / h), clip(src[3] / w), clip(src[4] / h)},
     batchId(src[0]), classId(static_cast<uint>(src[5])),

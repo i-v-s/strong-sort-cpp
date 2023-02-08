@@ -299,7 +299,7 @@ struct Track
     {
         Vector4<real> r = tlwh();
         r.block<2, 1>(2, 0) += r.block<2, 1>(0, 0);
-        return TrackedBox{r[0] / width, r[1] / height, r[2] / width, r[3] / height, trackId, classId, lastDetectionIdx, conf, timeSinceUpdate};
+        return TrackedBox{clip(r[0] / width), clip(r[1] / height), clip(r[2] / width), clip(r[3] / height), trackId, classId, lastDetectionIdx, conf, timeSinceUpdate};
     }
     TrackedBox result(const cv::Size &imageSize) const noexcept
     {
