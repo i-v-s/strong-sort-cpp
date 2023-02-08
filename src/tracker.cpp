@@ -847,8 +847,11 @@ vector<TrackedBox> StrongSort::update(const Matrix<real, Dynamic, 4> &ltwhs,
     // output bbox identities
     vector<TrackedBox> outputs;
     for (const auto &track: tracker->tracks)
-        if (track.state == Track::State::Confirmed && track.timeSinceUpdate <= 1)
-            outputs.push_back(track.result(w, h));
+        if (track.state == Track::State::Confirmed && track.timeSinceUpdate <= 1) {
+            auto tb = track.result(w, h);
+            if (!tb.empty())
+                outputs.push_back(tb);
+        }
     return outputs;
 }
 
