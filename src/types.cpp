@@ -5,15 +5,19 @@ using namespace std;
 
 #include "types.h"
 
+float clip(float value, float min_ = 0.f, float max_ = 1.f) noexcept
+{
+    return min(max(value, min_), max_);
+}
 
 DetectedBox::DetectedBox(const float *src, float w, float h) noexcept :
-    RelativeBox{src[1] / w, src[2] / h, src[3] / w, src[4] / h},
+    RelativeBox{clip(src[1] / w), clip(src[2] / h), clip(src[3] / w), clip(src[4] / h)},
     batchId(src[0]), classId(static_cast<uint>(src[5])),
     confidence(src[6])
 {}
 
 DetectedBox::DetectedBox(uint classId, uint batchId, float confidence, const std::array<float, 4> &box, const std::array<uint, 2> &size) noexcept :
-    RelativeBox{box[0] / size[0], box[1] / size[1], box[2] / size[0], box[3] / size[1]},
+    RelativeBox{clip(box[0] / size[0]), clip(box[1] / size[1]), clip(box[2] / size[0]), clip(box[3] / size[1])},
     batchId(batchId), classId(classId),
     confidence(confidence)
 {}
@@ -38,6 +42,11 @@ cv::Rect RelativeBox::rect(const cv::Mat &image) const noexcept
 float RelativeBox::area() const noexcept
 {
     return (x2 - x1) * (y2 - y1);
+}
+
+bool RelativeBox::empty() const noexcept
+{
+    return x2 <= x1 || y2 <= y1;
 }
 
 float RelativeBox::width() const noexcept

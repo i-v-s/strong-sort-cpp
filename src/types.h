@@ -7,12 +7,13 @@ struct RelativeBox
     cv::Rect rect(const cv::Size &imageSize) const noexcept;
     cv::Rect rect(const cv::Mat &image) const noexcept;
     float area() const noexcept;
+    bool empty() const noexcept;
     float width() const noexcept;
     float height() const noexcept;
     std::array<float, 4> array() const noexcept;
     std::pair<float, float> iou(const RelativeBox &b) const noexcept;
 
-    float x1, y1, x2, y2;
+    float x1 = 0.f, y1 = 0.f, x2 = 0.f, y2 = 0.f;
 };
 
 struct TrackedBox: public RelativeBox
