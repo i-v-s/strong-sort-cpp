@@ -804,10 +804,11 @@ json StrongSort::dumpTracks() const noexcept
     return tracker->dumpTracks();
 }
 
-vector<uint> StrongSort::trackIds() const noexcept
+unordered_set<uint> StrongSort::trackIds() const noexcept
 {
-    vector<uint> result(tracker->tracks.size());
-    transform(tracker->tracks.begin(), tracker->tracks.end(), result.begin(), [] (const auto &t){ return t.trackId; });
+    unordered_set<uint> result(tracker->tracks.size());
+    for (const Track &t: tracker->tracks)
+        result.emplace(t.trackId);
     return result;
 }
 

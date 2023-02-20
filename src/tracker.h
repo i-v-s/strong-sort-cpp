@@ -2,6 +2,7 @@
 #define TRACKER_H
 #include <memory>
 #include <vector>
+#include <unordered_set>
 
 #include <Eigen/Core>
 #include <opencv2/core.hpp>
@@ -27,7 +28,7 @@ class StrongSort
     Tracker *tracker;
 public:
     json dumpTracks() const noexcept;
-    std::vector<uint> trackIds() const noexcept;
+    std::unordered_set<uint> trackIds() const noexcept;
     StrongSort(real maxDist = 0.2,
                real maxIouDistance = 0.7,
                int maxAge=70,
