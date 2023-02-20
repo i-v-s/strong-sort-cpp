@@ -804,6 +804,13 @@ json StrongSort::dumpTracks() const noexcept
     return tracker->dumpTracks();
 }
 
+vector<uint> StrongSort::trackIds() const noexcept
+{
+    vector<uint> result(tracker->tracks.size());
+    transform(tracker->tracks.begin(), tracker->tracks.end(), result.begin(), [] (const auto &t){ return t.trackId; });
+    return result;
+}
+
 StrongSort::StrongSort(real maxDist, real maxIouDistance, int maxAge, int nInit, int nnBudget) :
     maxDist(maxDist)
 {
