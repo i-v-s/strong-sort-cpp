@@ -2,10 +2,10 @@ image: ubuntu:22.04
 
 stages:          # List of stages for jobs, and their order of execution
   - build
-  #- test
-  #- deploy
 
 before_script:
+ - export TZ=Asia/Yekaterinburg
+ - ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
  - apt-get update --yes
  - apt-get install --yes g++-12 cmake nlohmann-json3-dev libopencv-dev libeigen3-dev
 
