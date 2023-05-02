@@ -12,6 +12,9 @@ before_script:
 linux-build:
   stage: build
   tags: [docker]
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    GIT_SUBMODULE_DEPTH: 1
   script:
     - mkdir build
     - cd build
