@@ -7,7 +7,7 @@ before_script:
  - export TZ=Asia/Yekaterinburg
  - ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
  - apt-get update --yes
- - apt-get install --yes g++-12 cmake nlohmann-json3-dev libopencv-dev libeigen3-dev
+ - apt-get install --yes g++-12 cmake nlohmann-json3-dev libopencv-dev libeigen3-dev python3.10-dev
 
 linux-build:
   stage: build
