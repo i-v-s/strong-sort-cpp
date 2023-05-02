@@ -1,0 +1,28 @@
+image: ubuntu:22.04
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  #- test
+  #- deploy
+
+before_script:
+ - apt-get update --yes
+ - apt-get install --yes g++-12 cmake nlohmann-json3-dev libopencv-dev libeigen3-dev
+
+linux-build:
+  stage: build
+  tags: [docker]
+  script:
+    - mkdir build
+    - cd build
+    - echo "Configuring build..."
+    - cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-12 ..
+    - echo "Compiling the code..."
+    - make
+    - echo "Compilation successful."
+    - echo "Making package..."
+    - make package
+    - echo "Package ready."
+  artifacts:
+    paths:
+      - build/strongsort-*.deb
